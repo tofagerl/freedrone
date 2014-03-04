@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # PROVIDE: nzbdrone
-# REQUIRE: mono
+# REQUIRE: NETWORKING SERVERS DAEMON ldconfig resolv
 #
 # Add the following lines to /etc/rc.conf.local or /etc/rc.conf
 # to enable this service:
@@ -12,11 +12,11 @@
 #			data is stored.
 #			Default: /home/${nzbdrone_user}/.config/NzbDrone
 # nzbdrone_user:	The user account nzbdrone daemon runs as what
-#			you want it to be. It uses 'nobody' user by
+#			you want it to be. It uses '%%USER%%' user by
 #			default. Do not sets it as empty or it will run
 #			as root.
 # nzbdrone_group:	The group account nzbdrone daemon runs as what
-#			you want it to be. It uses 'user' group by
+#			you want it to be. It uses '%%GROUP%%' group by
 #			default. Do not sets it as empty or it will run
 #			as wheel.
 
@@ -30,23 +30,17 @@ stop_postcmd="${name}_poststop"
 
 
 : ${nzbdrone_enable:="NO"}
-: ${nzbdrone_user:="nobody"} #NOTE: DO NOT RUN AS ROOT, IT WILL BURN YOUR HOUSE DOWN AND RAPE YOUR CAT!
-: ${nzbdrone_group:="user"}
+: ${nzbdrone_user:="tom"}
+: ${nzbdrone_group:="tom"}
 : ${nzbdrone_dir:="/opt/NzbDrone"}
-: ${nzbdrone_data_dir:="/home/${nzbdrone_user}/.config/NzbDrone"}
+: ${nzbdrone_data_dir:="/home/tom/.config/NzbDrone"}
 : ${nzbdrone_log:="/var/log/nzbdrone.log"}
 
 command="/usr/local/bin/mono"
-command_args="/opt/NzbDrone/NzbDrone.exe >$nzbdrone_log 2>&1 &"
+command_args="$nzbdrone_dir/NzbDrone.exe >$nzbdrone_log 2>&1 &"
 nzbdrone_poststart()
 {
-        MONOSERVER_PID=$(ps ax | grep "NzbDrone.exe" | grep -v grep | awk '{print $1}')
-        if [ -f $pidfile ]; then
-                rm $pidfile
-        fi
-        if [ -n $MONOSERVER_PID ]; then
-                echo $MONOSERVER_PID > $pidfile
-        fi
+	echo $rc_pid> $pidfile
 }
 nzbdrone_poststop()
 {
