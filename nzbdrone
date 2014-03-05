@@ -40,7 +40,7 @@ command="/usr/local/bin/mono"
 command_args="$nzbdrone_dir/NzbDrone.exe >$nzbdrone_log 2>&1 &"
 nzbdrone_poststart()
 {
-	echo $rc_pid> $pidfile
+	echo `ps ax | grep "NzbDrone.exe" | grep -v grep | awk '{print $1}'` > $pidfile
 }
 nzbdrone_poststop()
 {
