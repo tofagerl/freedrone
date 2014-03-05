@@ -30,10 +30,10 @@ stop_postcmd="${name}_poststop"
 
 
 : ${nzbdrone_enable:="NO"}
-: ${nzbdrone_user:="tom"}
-: ${nzbdrone_group:="tom"}
+: ${nzbdrone_user:="nzbdrone"} #Note: Do not use root, and don't use a user without a home directory. If in doubt, either create a new user "nzbdrone" with a standard home directory "/home/nzbdrone/" or use the user that your nzb-app uses, sabnzbget or whatever.
+: ${nzbdrone_group:="nzbdrone"}
 : ${nzbdrone_dir:="/opt/NzbDrone"}
-: ${nzbdrone_data_dir:="/home/tom/.config/NzbDrone"}
+: ${nzbdrone_data_dir:="/home/${nzbdrone_user}/.config/NzbDrone"}
 : ${nzbdrone_log:="/var/log/nzbdrone.log"}
 
 command="/usr/local/bin/mono"
