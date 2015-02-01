@@ -6,19 +6,19 @@
 # Add the following lines to /etc/rc.conf.local or /etc/rc.conf
 # to enable this service:
 #
-# nzbdrone_enable (bool):       Set to NO by default.
-#                       Set it to YES to enable it.
-# nzbdrone_data_dir:    Directory where nzbdrone configuration
-#                       data is stored.
-#                       Default: /home/${nzbdrone_user}/.config/NzbDrone
-# nzbdrone_user:        The user account nzbdrone daemon runs as what
-#                       you want it to be. It uses '%%USER%%' user by
-#                       default. Do not sets it as empty or it will run
-#                       as root.
-# nzbdrone_group:       The group account nzbdrone daemon runs as what
-#                       you want it to be. It uses '%%GROUP%%' group by
-#                       default. Do not sets it as empty or it will run
-#                       as wheel.
+# nzbdrone_enable (bool):	Set to NO by default.
+#			Set it to YES to enable it.
+# nzbdrone_data_dir:	Directory where nzbdrone configuration
+#			data is stored.
+#			Default: /home/${nzbdrone_user}/.config/NzbDrone
+# nzbdrone_user:	The user account nzbdrone daemon runs as what
+#			you want it to be. It uses '%%USER%%' user by
+#			default. Do not sets it as empty or it will run
+#			as root.
+# nzbdrone_group:	The group account nzbdrone daemon runs as what
+#			you want it to be. It uses '%%GROUP%%' group by
+#			default. Do not sets it as empty or it will run
+#			as wheel.
 
 . /etc/rc.subr
 name="nzbdrone"
@@ -41,7 +41,7 @@ command="/usr/local/bin/mono"
 command_args="$nzbdrone_dir/NzbDrone.exe >$nzbdrone_log 2>&1 &"
 nzbdrone_poststart()
 {
-        echo `ps ax | grep "NzbDrone.exe" | grep -v grep | awk '{print $1}'` > $pidfile
+	echo `ps ax | grep "NzbDrone.exe" | grep -v grep | awk '{print $1}'` > $pidfile
 }
 nzbdrone_poststop()
 {
