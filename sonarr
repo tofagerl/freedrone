@@ -38,7 +38,7 @@ start_precmd="${name}_prestart"
 : ${sonarr_log:="/var/log/sonarr.log"}
 
 command="/usr/local/bin/mono"
-command_args="$sonarr_dir/NzbDrone.exe >sonarr 2>&1 &"
+command_args="$sonarr_dir/NzbDrone.exe >$sonarr_log 2>&1 &"
 sonarr_poststart()
 {
 	echo `ps ax | grep "NzbDrone.exe" | grep -v grep | awk '{print $1}'` > $pidfile
