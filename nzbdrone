@@ -27,6 +27,7 @@ load_rc_config $name
 start_postcmd="${name}_poststart"
 pidfile="/var/run/${name}.pid"
 stop_postcmd="${name}_poststop"
+start_precmd="${name}_prestart"
 
 
 : ${nzbdrone_enable:="NO"}
@@ -45,5 +46,9 @@ nzbdrone_poststart()
 nzbdrone_poststop()
 {
         rm $pidfile
+}
+nzbdrone_prestart()
+{
+        export HOME=`su $nzbdrone_user -c 'echo $HOME'`
 }
 run_rc_command "$1"
