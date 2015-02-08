@@ -1,0 +1,54 @@
+#!/bin/sh
+#
+# PROVIDE: sonarr
+# REQUIRE: NETWORKING SERVERS DAEMON ldconfig resolv
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# sonarr_enable (bool):	Set to NO by default.
+#			Set it to YES to enable it.
+# sonarr_data_dir:	Directory where sonarr configuration
+#			data is stored.
+#			Default: /home/${sonarr_user}/.config/NzbDrone
+# sonarr_user:	The user account sonarr daemon runs as what
+#			you want it to be. It uses '%%USER%%' user by
+#			default. Do not sets it as empty or it will run
+#			as root.
+# sonarr_group:	The group account sonarr daemon runs as what
+#			you want it to be. It uses '%%GROUP%%' group by
+#			default. Do not sets it as empty or it will run
+#			as wheel.
+
+. /etc/rc.subr
+name="sonarr"
+rcvar="${name}_enable"
+load_rc_config $name
+start_postcmd="${name}_poststart"
+pidfile="/var/run/${name}.pid"
+stop_postcmd="${name}_poststop"
+start_precmd="${name}_prestart"
+
+
+: ${sonarr_enable:="NO"}
+: ${sonarr_user:="sonarr"} #Note: Do not use root, and don't use a user without a home directory. If in doubt, either create a new user "nzbdrone" with a standard home directory "/home/nzbdrone/" or use the user that your nzb-app uses, sabnzbget or whatever.
+: ${sonarr_group:="sonarr"}
+: ${sonarr_dir:="/opt/sonarr"}
+: ${sonarr_data_dir:="/home/${sonarr_user}/.config/sonarr"}
+: ${sonarr_log:="/var/log/sonarr.log"}
+
+command="/usr/local/bin/mono"
+command_args="$sonarr_dir/NzbDrone.exe >sonarr 2>&1 &"
+sonarr_poststart()
+{
+	echo `ps ax | grep "NzbDrone.exe" | grep -v grep | awk '{print $1}'` > $pidfile
+}
+sonarr_poststop()
+{
+        rm $pidfile
+}
+sonarr_prestart()
+{
+        export HOME=`su $sonarr_user -c 'echo $HOME'`
+}
+run_rc_command "$1"
