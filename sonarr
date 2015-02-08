@@ -10,7 +10,7 @@
 #			Set it to YES to enable it.
 # sonarr_data_dir:	Directory where sonarr configuration
 #			data is stored.
-#			Default: /home/${sonarr_user}/.config/NzbDrone
+#			Default: /home/${sonarr_user}/.config/sonarr
 # sonarr_user:	The user account sonarr daemon runs as what
 #			you want it to be. It uses '%%USER%%' user by
 #			default. Do not sets it as empty or it will run
@@ -31,7 +31,7 @@ start_precmd="${name}_prestart"
 
 
 : ${sonarr_enable:="NO"}
-: ${sonarr_user:="sonarr"} #Note: Do not use root, and don't use a user without a home directory. If in doubt, either create a new user "nzbdrone" with a standard home directory "/home/nzbdrone/" or use the user that your nzb-app uses, sabnzbget or whatever.
+: ${sonarr_user:="sonarr"} #Note: Do not use root, and don't use a user without a home directory. If in doubt, either create a new user "sonarr" with a standard home directory "/home/sonarr/" or use the user that your nzb-app uses, sabnzbget or whatever.
 : ${sonarr_group:="sonarr"}
 : ${sonarr_dir:="/opt/sonarr"}
 : ${sonarr_data_dir:="/home/${sonarr_user}/.config/sonarr"}
