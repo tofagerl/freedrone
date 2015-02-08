@@ -34,7 +34,7 @@ start_precmd="${name}_prestart"
 : ${sonarr_user:="sonarr"} #Note: Do not use root, and don't use a user without a home directory. If in doubt, either create a new user "sonarr" with a standard home directory "/home/sonarr/" or use the user that your nzb-app uses, sabnzbget or whatever.
 : ${sonarr_group:="sonarr"}
 : ${sonarr_dir:="/opt/sonarr"}
-: ${sonarr_data_dir:="/home/${sonarr_user}/.config/sonarr"}
+: ${sonarr_data_dir:="/home/${sonarr_user}/.config/NzbDrone"}
 : ${sonarr_log:="/var/log/sonarr.log"}
 
 command="/usr/local/bin/mono"
